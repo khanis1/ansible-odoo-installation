@@ -1,0 +1,10 @@
+---
+- include_vars:
+    file: ../../templates/vars.yml
+- name: Add Odoo system user
+  become: yes
+  user:
+    name: "{{user_odoo}}"
+    shell: /bin/bash
+    password: "{{odoo_pass}}"
+    home: "{{odoo_path}}"

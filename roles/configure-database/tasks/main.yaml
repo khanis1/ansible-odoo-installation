@@ -1,0 +1,42 @@
+---
+
+- include_vars:
+    file: ../../templates/vars.yml
+
+#- name: Create app database
+#  become_user: postgres
+#  postgresql_db:
+#    state: present
+#    name: "{{db_name}}"
+
+#- name: create app user
+#  become_user: postgres
+#  postgresql_user:
+#    state: present
+#    name: "{{db_user}}"
+#    password: "{{db_pass}}"
+
+#- name: give ownership to the user database
+#  become: yes
+#  become_user: postgres
+#  postgresql_owner:
+#    db: "{{db_name}}"
+#    obj_type: database
+#    obj_name: "{{db_name}}"
+#    new_owner: "{{db_user}}"
+
+#- name: grant db user acces to the database
+#  become_user: postgres
+#  postgresql_privs:
+#    type: database
+#    database: "{{ db_name }}"
+#    roles: "{{ db_user }}"
+#    grant_option: no
+#    privs: all
+- name: create user database
+  become: yes
+  shell: " sudo -u postgres createuser -s odoo"
+
+- name: alter the odoo to supperuser
+  become: yes
+  shell: "sudo -u postgres psql -c \"ALTER USER odoo WITH SUPERUSER;\""

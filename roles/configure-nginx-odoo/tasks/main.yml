@@ -1,0 +1,22 @@
+---
+
+- name: install nginx
+  apt:
+    name: nginx
+    state: latest
+
+- name: copy the config file of nginx
+  copy:
+    src: ../../templates/odoo
+    dest: /etc/nginx/sites-available/odoo
+
+- name: create asymbolic link for odoo
+  shell: "ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/"
+
+- name: unlikn the default file
+  shell: "sudo unlink /etc/nginx/sites-enabled/default"
+
+- name: reload the nginx
+  shell: "sudo nginx -t && sudo systemctl reload nginx"
+
+

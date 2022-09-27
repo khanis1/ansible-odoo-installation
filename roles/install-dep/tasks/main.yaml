@@ -1,0 +1,40 @@
+---
+
+- name: install dependencies
+  become: yes
+  apt:
+    pkg:
+     - fail2ban
+     - python3-pip
+     - python-dev
+     - python3-dev
+     - libxml2-dev
+     - libxslt1-dev
+     - zlib1g-dev
+     - libsasl2-dev
+     - libldap2-dev
+     - build-essential
+     - libssl-dev
+     - libffi-dev
+     - libmysqlclient-dev
+     - libjpeg-dev
+     - libpq-dev
+     - libjpeg8-dev
+     - liblcms2-dev
+     - libblas-dev
+     - libatlas-base-dev
+     - npm
+     - python3-psycopg2
+     - node-less
+     - postgresql
+     - git
+     - fontconfig
+     - xfonts-75dpi
+     - xfonts-base
+     - xfonts-encodings
+     - xfonts-utils
+     - acl
+    state: present
+    update_cache: yes
+- name: install npm packages
+  shell: "npm install -g less less-plugin-clean-css"

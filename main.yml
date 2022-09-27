@@ -1,0 +1,11 @@
+---
+
+- name: installing odoo
+  hosts: all
+  remote_user: anis
+  become: yes
+  roles:
+    - install-dep
+    - configure-database
+    - configure-odoo
+    - configure-nginx-odoo

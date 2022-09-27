@@ -1,0 +1,7 @@
+user_odoo: odoo
+odoo_pass: odoo
+odoo_path: /opt/odoo
+db_user: odoo
+db_pass: odoo
+db_name: test
+

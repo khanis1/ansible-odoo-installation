@@ -1,0 +1,55 @@
+---
+
+- include_vars:
+    file: ../../templates/vars.yml
+
+- name: create odoo user
+  become: yes
+  shell: "sudo adduser --system --home=/opt/odoo --group odoo"
+
+
+- name: Cloning odoo from github
+  become: yes
+  shell: "sudo git clone https://www.github.com/odoo/odoo --depth 1 --branch 15.0 --single-branch /opt/odoo/"
+
+- name: install requirement
+  become: yes
+  shell: " pip3 install -r /opt/odoo/requirements.txt "
+
+- name: install the pdf nannanann
+  become: yes
+  shell: "wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb"
+
+- name: depkg pdf nananna
+  shell: " dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb "
+
+- name: install the pdf extenxion
+  shell: "apt install -f "
+
+- name: copy the odoo config file
+  become: yes
+  copy:
+    src: ../../templates/odoo.conf
+    dest: /etc/odoo.conf
+    owner: "{{user_odoo}}"
+    mode: '0640'
+
+- name: create a directory for log
+  become: yes
+  file:
+    path: /var/log/odoo
+    state: directory
+    owner: "{{user_odoo}}"
+    group: root
+
+- name: copie the config servvice file 
+  copy:
+    src: ../../templates/odoo.service
+    dest: /etc/systemd/system/odoo.service
+    owner: root
+    mode: '0755'
+
+- name: start the odoo service
+  shell: " systemctl start odoo.service"
+- name: enable odoo
+  shell: "systemctl enable odoo.service "
